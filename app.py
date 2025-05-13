@@ -18,9 +18,9 @@ def index():
             r.text,
             extensions=["fenced_code", "codehilite"]  # optional for code blocks
         )
-        return(render_template("index.html",result=html))
+        return(render_template("index.html",result_html=html))
     else:
-        return(render_template("index.html",result="waiting"))
+        return(render_template("index.html",result_html="waiting"))
 
 if __name__ == "__main__":
     app.run()
