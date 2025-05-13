@@ -1,22 +1,21 @@
 from flask import Flask, render_template, request
-import google.generativeai as palm
+from google import genai
+import markdown
 import os
 
 api_key = os.getenv("GOOGLE_API")
-palm.configure(api_key=api_key)
+client = genai.Client(api_key=api_key)
 
-#defaults = { 'model': "models/text-bison-001"}
 app = Flask(__name__)
-model = palm.GenerativeModel("models/text-bison-001")
+model = "gemini-2.0-flash"
 
 @app.route("/",methods=["GET","POST"])
 def index():
     if request.method == "POST":
         t = request.form.get("txt")
         r = model.generate_text(prompt=t)
-        #r = model.generate_content(t)
-        return(render_template("index.html",result=r.last))
-        #return(render_template("index.html",result=r.candidates[0].content.parts[0].text))
+        r = client.models.generate_content(model=model,contents=t,)
+        return(render_template("index.html",result=r.text))
     else:
         return(render_template("index.html",result="waiting"))
 
