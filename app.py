@@ -19,11 +19,17 @@ def gemini():
 
 @app.route("/gemini_reply",methods=["GET","POST"])
 def gemini_reply():
-    q = request.form.get("q")
-    print(q)
-    #gemini
-    r=q
-    return(render_template("gemini_reply.html",r=r))
+    #q = request.form.get("q")
+    if request.method == "POST":
+        t = request.form.get("txt")
+        r = client.models.generate_content(model=model,contents=t,)
+        html = markdown.markdown(
+            r.text,
+            extensions=["fenced_code", "codehilite"]  # optional for code blocks
+        )
+        return(render_template("index.html",result_html=html))
+    else:
+        return(render_template("index.html",result_html="waiting"))
 
 if __name__ == "__main__":
     app.run()
