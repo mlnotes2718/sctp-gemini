@@ -14,7 +14,11 @@ def index():
     if request.method == "POST":
         t = request.form.get("txt")
         r = client.models.generate_content(model=model,contents=t,)
-        return(render_template("index.html",result=r.text))
+        html = markdown.markdown(
+            r.text,
+            extensions=["fenced_code", "codehilite"]  # optional for code blocks
+        )
+        return(render_template("index.html",result=html))
     else:
         return(render_template("index.html",result="waiting"))
 
