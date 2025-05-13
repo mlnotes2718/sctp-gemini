@@ -17,5 +17,13 @@ def index():
 def gemini():
     return(render_template("gemini.html"))
 
+@app.route("/gemini_reply",methods=["GET","POST"])
+def gemini_reply():
+    q = request.form.get("q")
+    print(q)
+    #gemini
+    r=q
+    return(render_template("gemini_reply.html",r=r))
+
 if __name__ == "__main__":
     app.run()
