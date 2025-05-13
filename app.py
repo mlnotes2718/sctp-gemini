@@ -3,7 +3,7 @@ from google import genai
 import markdown
 import os
 
-api_key = os.getenv("GOOGLE_API")
+api_key = os.getenv('GOOGLE_API')
 client = genai.Client(api_key=api_key)
 
 app = Flask(__name__)
@@ -19,14 +19,9 @@ def gemini():
 
 @app.route("/gemini_reply",methods=["GET","POST"])
 def gemini_reply():
-    #q = request.form.get("q")
-    t = request.form.get("txt")
-    r = client.models.generate_content(model=model,contents=t,)
-    html = markdown.markdown(
-        r.text,
-        extensions=["fenced_code", "codehilite"]  # optional for code blocks
-    )
-    return(render_template("index.html",result_html=html))
+    q = request.form.get("q")
+    r = client.models.generate_content(model=model,contents=q)
+    return(render_template("gemini_reply.html",r=r.text))
 
 if __name__ == "__main__":
     app.run()
