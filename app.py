@@ -21,7 +21,11 @@ def gemini():
 def gemini_reply():
     q = request.form.get("q")
     r = client.models.generate_content(model=model,contents=q)
-    return(render_template("gemini_reply.html",r=r.text))
+    r_html = markdown.markdown(
+            r.text,
+            extensions=["fenced_code", "codehilite"]  
+    )
+    return(render_template("gemini_reply.html",r=r_html))
 
 if __name__ == "__main__":
     app.run()
