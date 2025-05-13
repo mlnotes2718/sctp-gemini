@@ -13,7 +13,7 @@ model = palm.GenerativeModel("models/text-bison-001")
 def index():
     if request.method == "POST":
         t = request.form.get("txt")
-        r = model.generate_text(t)
+        r = model.generate_text(prompt=t)
         #r = model.generate_content(t)
         return(render_template("index.html",result=r.last))
         #return(render_template("index.html",result=r.candidates[0].content.parts[0].text))
