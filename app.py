@@ -13,7 +13,6 @@ model = "gemini-2.0-flash"
 def index():
     if request.method == "POST":
         t = request.form.get("txt")
-        r = model.generate_text(prompt=t)
         r = client.models.generate_content(model=model,contents=t,)
         return(render_template("index.html",result=r.text))
     else:
