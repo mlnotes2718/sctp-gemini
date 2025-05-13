@@ -1,6 +1,6 @@
 flask
 replicate
-gunicorn
+Gunicorn
 google-genai
 openai
 markdown
