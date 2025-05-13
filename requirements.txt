@@ -3,3 +3,4 @@ replicate
 gunicorn
 google-genai
 openai
+markdown
