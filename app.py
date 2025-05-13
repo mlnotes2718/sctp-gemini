@@ -11,16 +11,11 @@ model = "gemini-2.0-flash"
 
 @app.route("/",methods=["GET","POST"])
 def index():
-    if request.method == "POST":
-        t = request.form.get("txt")
-        r = client.models.generate_content(model=model,contents=t,)
-        html = markdown.markdown(
-            r.text,
-            extensions=["fenced_code", "codehilite"]  # optional for code blocks
-        )
-        return(render_template("index.html",result_html=html))
-    else:
-        return(render_template("index.html",result_html="waiting"))
+        return(render_template("index.html"))
+
+@app.route("/gemini",methods=["GET","POST"])
+def gemini():
+    return(render_template("gemini.html"))
 
 if __name__ == "__main__":
     app.run()
