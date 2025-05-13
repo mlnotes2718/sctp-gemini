@@ -5,5 +5,8 @@
         <p><input type="text" name="txt"></p>
         <p><input type="submit" value="Enter"></p>
     </form>
-    <p>The reply is {{result}}</p>
+    <p>The reply is:</p>
+    <div id="response">
+      {{ result_html | safe }}
+    </div>
 </html>
