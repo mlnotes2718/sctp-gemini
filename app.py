@@ -3,7 +3,15 @@ from google import genai
 import markdown
 import os
 
-api_key = os.getenv('GOOGLE_API')
+api_key = os.getenv("GOOGLE_API")
+
+# Load environment variables from .env file
+# from dotenv import load_dotenv
+# load_dotenv()
+# api_key = os.environ.get("GOOGLE_API")
+# print("API Key:", api_key)  # Debugging line to check if the API key is loaded correctly
+
+# Initialize the Google GenAI client
 client = genai.Client(api_key=api_key)
 
 app = Flask(__name__)
@@ -11,21 +19,16 @@ model = "gemini-2.0-flash"
 
 @app.route("/",methods=["GET","POST"])
 def index():
-        return(render_template("index.html"))
-
-@app.route("/gemini",methods=["GET","POST"])
-def gemini():
-    return(render_template("gemini.html"))
-
-@app.route("/gemini_reply",methods=["GET","POST"])
-def gemini_reply():
-    q = request.form.get("q")
-    r = client.models.generate_content(model=model,contents=q)
-    r_html = markdown.markdown(
+    if request.method == "POST":
+        t = request.form.get("txt")
+        r = client.models.generate_content(model=model,contents=t,)
+        html = markdown.markdown(
             r.text,
-            extensions=["fenced_code", "codehilite"]  
-    )
-    return(render_template("gemini_reply.html",r=r_html))
+            extensions=["fenced_code", "codehilite"]  # optional for code blocks
+        )
+        return(render_template("index.html",result_html=html))
+    else:
+        return(render_template("index.html",result_html="waiting"))
 
 if __name__ == "__main__":
     app.run()

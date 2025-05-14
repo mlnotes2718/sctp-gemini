@@ -1,14 +1,12 @@
 <html>
-<head>
-    <meta name ="viewport" content ="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-</head>
-<body>
-    <div class="container">
-        <h2>Web Application</h2>
-        <form action="/gemini" method="post">
-            <input type="submit" value="Chatbot by Gemini">
-        </form>
+    <h1>Ask Gemini in Cloud</h1>
+    <form action="/" method="post">
+        <p>Please enter the your question : </p>
+        <p><input type="text" name="txt"></p>
+        <p><input type="submit" value="Enter"></p>
+    </form>
+    <p>The reply is:</p>
+    <div id="response">
+      {{ result_html | safe }}
     </div>
-</body>
 </html>
